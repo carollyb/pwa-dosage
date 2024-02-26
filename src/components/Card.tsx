@@ -1,16 +1,24 @@
 import { ReactNode } from "react";
 import { View, StyleSheet, StatusBar, Text } from "react-native";
+import DoseCalculator from "../utils/DoseCalculator";
 
 type CardProps = {
   title: string;
-  children: ReactNode;
+  medicine: string;
+  value: number | null;
 };
 
-function Card({ title, children }: CardProps) {
+function Card({ title, medicine, value }: CardProps) {
   return (
     <View style={styles.item}>
       <Text style={styles.text}>{title}</Text>
-      {children}
+      {value ? (
+        <Text style={styles.result}>
+          {DoseCalculator({ medicine: medicine, value: value })}
+        </Text>
+      ) : (
+        <Text>--</Text>
+      )}
       <Text style={styles.result}> mL</Text>
     </View>
   );

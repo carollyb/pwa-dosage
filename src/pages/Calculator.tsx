@@ -42,13 +42,11 @@ function Calculator() {
         <Text style={styles.result}> mL</Text>
       </View>
 
-      <Card title="Fentanil (50 mcg/mL)">
-        {value ? (
-          <Text style={styles.result}>{((value * 2) / 50).toFixed(1)}</Text>
-        ) : (
-          <Text>--</Text>
-        )}
-      </Card>
+      <Card
+        title="Fentanil (50 mcg/mL)"
+        medicine="fentanil"
+        value={value}
+      ></Card>
 
       <View style={styles.intro}>
         <Text>2. INDUÇÃO/SEDAÇÃO</Text>

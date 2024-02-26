@@ -16,7 +16,7 @@ export default function Routes() {
               <Feather name="home" size={20} color={color} />
             ),
           }}
-          name="Home"
+          name="Indicações Clínicas"
           component={Main}
         />
         <Tab.Screen
