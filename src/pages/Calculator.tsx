@@ -32,15 +32,11 @@ function Calculator() {
         <Text>Lidocaína reduz a incidência de laringoespasmo</Text>
       </View>
 
-      <View style={styles.item}>
-        <Text style={styles.text}>Lidocaína 2% (20 mg/mL) </Text>
-        {value ? (
-          <Text style={styles.result}>{((value * 1.5) / 20).toFixed(1)}</Text>
-        ) : (
-          <Text>--</Text>
-        )}
-        <Text style={styles.result}> mL</Text>
-      </View>
+      <Card
+        title="Lidocaína 2% (20 mg/mL)"
+        medicine="lidocaina"
+        value={value}
+      ></Card>
 
       <Card
         title="Fentanil (50 mcg/mL)"
@@ -52,15 +48,11 @@ function Calculator() {
         <Text>2. INDUÇÃO/SEDAÇÃO</Text>
       </View>
 
-      <View style={styles.item}>
-        <Text style={styles.text}>Cetamina (50 mg/mL) </Text>
-        {value ? (
-          <Text style={styles.result}>{((value * 2) / 50).toFixed(1)}</Text>
-        ) : (
-          <Text>--</Text>
-        )}
-        <Text style={styles.result}> mL</Text>
-      </View>
+      <Card
+        title="Cetamina (50 mg/mL)"
+        medicine="cetamina"
+        value={value}
+      ></Card>
     </View>
   );
 }
@@ -98,11 +90,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#506D71",
     fontWeight: "bold",
-  },
-  result: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#4B845E",
   },
 });
 

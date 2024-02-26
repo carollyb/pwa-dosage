@@ -14,6 +14,10 @@ const CalculusBasis: {
     multiplier: 2,
     divisor: 50,
   },
+  cetamina: {
+    multiplier: 2,
+    divisor: 50,
+  },
 };
 
 export default function DoseCalculator({
