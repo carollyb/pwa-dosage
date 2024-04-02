@@ -14,12 +14,11 @@ function Card({ title, medicine, value }: CardProps) {
       <Text style={styles.text}>{title}</Text>
       {value ? (
         <Text style={styles.result}>
-          {DoseCalculator({ medicine: medicine, value: value })}
+          {DoseCalculator({ medicine: medicine, value: value })} mL
         </Text>
       ) : (
         <Text>--</Text>
       )}
-      <Text style={styles.result}> mL</Text>
     </View>
   );
 }
@@ -49,6 +48,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 14,
+    gap: 8,
   },
   text: {
     fontSize: 18,

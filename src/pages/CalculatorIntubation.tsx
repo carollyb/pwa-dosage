@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { View, StyleSheet, StatusBar, Text } from "react-native";
+import { View, StyleSheet, StatusBar, Text, ScrollView } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import Card from "../components/Card";
 
 const weight = Array.from({ length: 101 }, (value, index) => index + 40);
 
-function Calculator() {
+function CalculatorIntubation() {
   const [value, setValue] = useState<number | null>(null);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>
           Intubação Orotraqueal - Sequência Rápida
@@ -53,7 +53,50 @@ function Calculator() {
         medicine="cetamina"
         value={value}
       ></Card>
-    </View>
+      <Card
+        title="Etomidato (2 mg/mL)"
+        medicine="etomidato"
+        value={value}
+      ></Card>
+      <Card
+        title="Midazolam (5 mg/mL)"
+        medicine="midazolam"
+        value={value}
+      ></Card>
+      <Card title="Propofol 1%" medicine="propofol_1" value={value}></Card>
+      <Card title="Propofol 2%" medicine="propofol_2" value={value}></Card>
+
+      <View style={styles.intro}>
+        <Text>3. BLOQUEIO NEUROMUSCULAR</Text>
+        <Text>Estão colocados em ordem de preferência</Text>
+      </View>
+
+      <Card
+        title="Succinilcolina (FR 100 mg) => 1 FR + 10 mL AD"
+        medicine="succinilcolina"
+        value={value}
+      ></Card>
+      <Card
+        title="Atracúrio (10 mg/mL) => 5 mL + 5 mL AD"
+        medicine="atracurio"
+        value={value}
+      ></Card>
+      <Card
+        title="Rocurônio (10 mg/mL)"
+        medicine="rocuronio"
+        value={value}
+      ></Card>
+      <Card
+        title="Cisatracúrio (2 mg/mL)"
+        medicine="cisatracurio"
+        value={value}
+      ></Card>
+      <Card
+        title="Pancurônio (2 mg/mL)"
+        medicine="pancuronio"
+        value={value}
+      ></Card>
+    </ScrollView>
   );
 }
 
@@ -68,6 +111,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 14,
+    gap: 8,
   },
   intro: {
     padding: 8,
@@ -93,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Calculator;
+export default CalculatorIntubation;
