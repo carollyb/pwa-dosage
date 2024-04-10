@@ -4,6 +4,7 @@ import Main from "./pages/Main";
 import CalculatorIntubation from "./pages/CalculatorIntubation";
 import { Feather } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import CalculatorVasoactive from "./pages/CalculatorVasoactive";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -13,7 +14,14 @@ export default function Routes() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Main" component={Main} />
-        <Stack.Screen name="Calculator" component={CalculatorIntubation} />
+        <Stack.Screen
+          name="CalculatorIntubation"
+          component={CalculatorIntubation}
+        />
+        <Stack.Screen
+          name="CalculatorVasoactive"
+          component={CalculatorVasoactive}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
