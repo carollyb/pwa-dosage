@@ -2,8 +2,7 @@ import { useState } from "react";
 import { View, StyleSheet, StatusBar, Text, ScrollView } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import Card from "../components/Card";
-
-const weight = Array.from({ length: 101 }, (value, index) => index + 40);
+import DropdownWeight from "../components/DropdownWeight";
 
 function CalculatorIntubation() {
   const [value, setValue] = useState<number | null>(null);
@@ -13,19 +12,7 @@ function CalculatorIntubation() {
         <Text style={styles.title}>
           Intubação Orotraqueal - Sequência Rápida
         </Text>
-        <SelectDropdown
-          defaultButtonText={"Selecione o peso (kg)"}
-          data={weight}
-          onSelect={(selectedItem, index) => {
-            setValue(selectedItem);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return `${selectedItem} kg`;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-        />
+        <DropdownWeight setValue={setValue} />
       </View>
       <View style={styles.intro}>
         <Text>1. PRÉ-MEDICAÇÃO</Text>

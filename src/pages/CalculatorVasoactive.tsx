@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { ScrollView, Text, StyleSheet, StatusBar, View } from "react-native";
-import SelectDropdown from "react-native-select-dropdown";
 import { ContinuousInfusion } from "../utils/ContinuousInfusion";
-
-const weight = Array.from({ length: 101 }, (value, index) => index + 40);
+import DropdownWeight from "../components/DropdownWeight";
 
 function CalculatorVasoactive() {
   const [value, setValue] = useState<number | null>(null);
@@ -11,19 +9,7 @@ function CalculatorVasoactive() {
     <ScrollView style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Drogas Vasoativas</Text>
-        <SelectDropdown
-          defaultButtonText={"Selecione o peso (kg)"}
-          data={weight}
-          onSelect={(selectedItem, index) => {
-            setValue(selectedItem);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return `${selectedItem} kg`;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-        />
+        <DropdownWeight setValue={setValue} />
       </View>
 
       <View style={styles.intro}>
