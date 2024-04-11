@@ -1,5 +1,11 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ScrollView, Pressable, Text } from "react-native";
+import {
+  ScrollView,
+  Pressable,
+  Text,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
 
 type RootStackParamList = {
   Main: undefined;
@@ -11,14 +17,40 @@ type Props = NativeStackScreenProps<RootStackParamList>;
 function Main({ navigation }: Props) {
   return (
     <ScrollView>
-      <Pressable onPress={() => navigation.navigate("CalculatorIntubation")}>
-        <Text>Intubação Orotraqueal (sequência rápida)</Text>
+      <Pressable
+        style={styles.main}
+        onPress={() => navigation.navigate("CalculatorIntubation")}
+      >
+        <Text style={styles.pressable}>
+          Intubação Orotraqueal (sequência rápida)
+        </Text>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate("CalculatorVasoactive")}>
-        <Text>Drogas Vasoativas</Text>
+      <Pressable
+        style={styles.main}
+        onPress={() => navigation.navigate("CalculatorVasoactive")}
+      >
+        <Text style={styles.pressable}>Drogas Vasoativas</Text>
       </Pressable>
     </ScrollView>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  main: {
+    backgroundColor: "#E8E8E8",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 14,
+    gap: 8,
+  },
+  pressable: {
+    fontFamily: "Inter_700Bold",
+    fontSize: 32,
+  },
+});
 export default Main;

@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -30,7 +28,13 @@
       "output": "static"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": ["node_modules/@expo-google-fonts/inter/Inter_700Bold.ttf"]
+        }
+      ]
     ],
     "extra": {
       "router": {

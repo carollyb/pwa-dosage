@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View, StyleSheet, StatusBar, Text, ScrollView } from "react-native";
-import SelectDropdown from "react-native-select-dropdown";
 import Card from "../components/Card";
 import DropdownWeight from "../components/DropdownWeight";
 
