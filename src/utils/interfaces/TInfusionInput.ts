@@ -6,4 +6,5 @@ type InfusionInput = {
   infusionTime: number;
   concentration: number;
   standard: boolean;
+  dose?: number;
 };

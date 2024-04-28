@@ -2,12 +2,12 @@ export class ContinuousInfusion {
   constructor() {}
 
   private static initialFlow(
-    initialDose: number,
+    dose: number,
     weight: number,
     infusionTime: number,
     concentration: number
   ): number {
-    return weight * initialDose * (infusionTime / concentration);
+    return weight * dose * (infusionTime / concentration);
   }
 
   static calculate({
@@ -18,14 +18,14 @@ export class ContinuousInfusion {
     infusionTime,
     concentration,
     standard,
+    dose,
   }: InfusionInput): string {
-    const initialDose = minDose + (maxDose - minDose) / 2;
     if (standard) {
       weight = 1;
     }
     const initialFlowRate = this.initialFlow(
       weight,
-      initialDose,
+      dose ? dose : minDose + (maxDose - minDose) / 2,
       infusionTime,
       concentration
     );
