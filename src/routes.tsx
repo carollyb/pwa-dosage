@@ -5,6 +5,7 @@ import CalculatorIntubation from "./pages/CalculatorIntubation";
 import { Feather } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CalculatorVasoactive from "./pages/CalculatorVasoactive";
+import CalculatorHypernatremia from "./pages/CalculatorHypernatremia";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -21,6 +22,10 @@ export default function Routes() {
         <Stack.Screen
           name="CalculatorVasoactive"
           component={CalculatorVasoactive}
+        />
+        <Stack.Screen
+          name="CalculatorHypernatremia"
+          component={CalculatorHypernatremia}
         />
       </Stack.Navigator>
     </NavigationContainer>

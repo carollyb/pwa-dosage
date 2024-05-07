@@ -11,6 +11,7 @@ type RootStackParamList = {
   Main: undefined;
   CalculatorIntubation: undefined;
   CalculatorVasoactive: undefined;
+  CalculatorHypernatremia: undefined;
 };
 type Props = NativeStackScreenProps<RootStackParamList>;
 
@@ -25,11 +26,19 @@ function Main({ navigation }: Props) {
           Intubação Orotraqueal (sequência rápida)
         </Text>
       </Pressable>
+
       <Pressable
         style={styles.main}
         onPress={() => navigation.navigate("CalculatorVasoactive")}
       >
         <Text style={styles.pressable}>Drogas Vasoativas</Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.main}
+        onPress={() => navigation.navigate("CalculatorHypernatremia")}
+      >
+        <Text style={styles.pressable}>Hipernatremia</Text>
       </Pressable>
     </ScrollView>
   );
