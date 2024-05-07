@@ -12,11 +12,8 @@ import {
 import SelectDropdown from "react-native-select-dropdown";
 
 function CalculatorHypernatremia() {
-  const [gender, setGender] = useState<string | null>(null);
   const [weight, setWeight] = useState<string>();
-  const [sodium, setSodium] = useState<string>();
   const [result, setResult] = useState<boolean | null>(null);
-  const [waterResult, setWaterResult] = useState<number>();
   const [data, setData] = useState<{ [key: string]: string } | null>(null);
 
   const DATA = [
@@ -65,8 +62,8 @@ function CalculatorHypernatremia() {
     if (index % 2 === 0) {
       if (index === 6) {
         return (
-          <View style={styles.cell2}>
-            <Pressable style={styles.button} onPress={() => setResult(true)}>
+          <View style={styles.cell3}>
+            <Pressable style={styles.button} onPress={() => console.log(data)}>
               <Text style={styles.pressable}>{item.title}</Text>
             </Pressable>
           </View>
@@ -140,57 +137,15 @@ function CalculatorHypernatremia() {
         />
       </View>
 
-      {/* <View style={styles.main}>
-        <View style={styles.internal}>
-          <Text>Peso</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={setWeight}
-            value={weight}
-            placeholder="Peso"
-            keyboardType="numeric"
-          />
-        </View>
-        <View style={styles.internal}>
-          <Text>Soro sérico</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={setSodium}
-            value={sodium}
-            placeholder="Sodio sérico"
-            keyboardType="numeric"
-          />
-        </View>
-        <View style={styles.internal}>
-          <Text>Sexo</Text>
-          <SelectDropdown
-            defaultButtonText={"Selecione o Sexo"}
-            data={["Mulher", "Homem"]}
-            onSelect={(selectedItem, index) => {
-              setGender(selectedItem);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return `${selectedItem}`;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
-          />
-        </View>
-        <Pressable style={styles.button} onPress={() => setResult(true)}>
-          <Text style={styles.pressable}>Teste</Text>
-        </Pressable>
-      </View> */}
-
       {result && (
         <View style={styles.main}>
-          <Text>
+          <Text style={styles.textResult}>
             Considerando que é seguro variar a [Na+]sérico em até 8 mEq/L em 24
             horas, o volume necessario para causar esta redução, por solução
             mais utilizada, é de:
           </Text>
           <View style={styles.internal}>
-            <Text>{`Água livre  ${waterResult} mL`}</Text>
+            <Text>{`Água livre  ${data} mL`}</Text>
           </View>
         </View>
       )}
@@ -225,6 +180,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-end",
     marginRight: 8,
+  },
+  cell3: {
+    flex: 2,
+    justifyContent: "center",
   },
   textDropdown: {
     fontSize: 14,
@@ -281,7 +240,10 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   title: {
+    padding: 20,
+    fontFamily: "Inter_500Medium",
     fontSize: 24,
+    textAlign: "center",
   },
   text: {
     fontSize: 18,
@@ -302,16 +264,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   button: {
-    flex: 2,
     width: "100%",
-    backgroundColor: "#8183CA",
-    borderRadius: 8,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    backgroundColor: "#506D71",
+    borderRadius: 20,
+    marginTop: 16,
   },
   pressable: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 28,
+    fontFamily: "Inter_500Medium",
+    fontSize: 24,
     textAlign: "center",
     color: "#E8E8E8",
+  },
+  textResult: {
+    padding: 20,
+    fontFamily: "Inter_400Regular",
   },
 });
 
