@@ -12,7 +12,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import getResults from "../utils/Hypernatremia";
 
 function CalculatorHypernatremia() {
-  const [water, setWater] = useState<number | null>(null);
+  const [result, setResult] = useState<{ [key: string]: number } | null>(null);
   const [data, setData] = useState<{ [key: string]: string } | null>(null);
 
   const DATA = [
@@ -66,12 +66,14 @@ function CalculatorHypernatremia() {
               style={styles.button}
               onPress={() => {
                 if (data) {
-                  const { water } = getResults({
-                    weight: data.weight,
-                    sodium: data.sodium,
-                    sex: data.sex,
-                  });
-                  setWater(water);
+                  const { water, salineSolution, salineSolution2 } = getResults(
+                    {
+                      weight: data.weight,
+                      sodium: data.sodium,
+                      sex: data.sex,
+                    }
+                  );
+                  setResult({ water, salineSolution, salineSolution2 });
                 }
               }}
             >
@@ -147,15 +149,26 @@ function CalculatorHypernatremia() {
         />
       </View>
 
-      {water && (
+      {result && (
         <View style={styles.main}>
           <Text style={styles.textResult}>
             Considerando que é seguro variar a [Na+]sérico em até 8 mEq/L em 24
             horas, o volume necessario para causar esta redução, por solução
             mais utilizada, é de:
           </Text>
-          <View style={styles.internal}>
-            <Text style={styles.result}>{`Água livre: ${water} mL`}</Text>
+          <View style={styles.resultBox}>
+            <Text style={styles.result}>{`Água livre: ${result[
+              "water"
+            ].toLocaleString("pt-BR")} mL`}</Text>
+            <Text style={styles.result}>{`Soro Glicosado 5%: ${result[
+              "water"
+            ].toLocaleString("pt-BR")} mL`}</Text>
+            <Text style={styles.result}>{`Solução Salina 0,45%: ${result[
+              "salineSolution"
+            ].toLocaleString("pt-BR")} mL`}</Text>
+            <Text style={styles.result}>{`Solução Salina 0,225%: ${result[
+              "salineSolution2"
+            ].toLocaleString("pt-BR")} mL`}</Text>
           </View>
         </View>
       )}
@@ -259,6 +272,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#506D71",
     fontWeight: "bold",
+  },
+  resultBox: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   result: {
     fontSize: 18,
