@@ -66,14 +66,12 @@ function CalculatorHypernatremia() {
               style={styles.button}
               onPress={() => {
                 if (data) {
-                  const { water, salineSolution, salineSolution2 } = getResults(
-                    {
-                      weight: data.weight,
-                      sodium: data.sodium,
-                      sex: data.sex,
-                    }
-                  );
-                  setResult({ water, salineSolution, salineSolution2 });
+                  const results = getResults({
+                    weight: data.weight,
+                    sodium: data.sodium,
+                    sex: data.sex,
+                  });
+                  setResult(results);
                 }
               }}
             >
@@ -146,6 +144,8 @@ function CalculatorHypernatremia() {
           renderItem={Item}
           keyExtractor={(item) => item.id}
           numColumns={2}
+          style={styles.flatlist}
+          scrollEnabled={true}
         />
       </View>
 
@@ -172,6 +172,49 @@ function CalculatorHypernatremia() {
           </View>
         </View>
       )}
+
+      {result && (
+        <View style={styles.main}>
+          <Text style={styles.text}>Infusão em 24 horas</Text>
+
+          <View style={styles.card}>
+            <Text style={styles.textResult}>{`Soro Glicosado 5%`}</Text>
+            <Text style={styles.result}>{`Soro Glicosado 5% EV ${result[
+              "glucoseSolution"
+            ].toLocaleString("pt-BR")} mL/h`}</Text>
+          </View>
+
+          <View style={styles.card}>
+            <Text style={styles.textResult}>{`Solução Salina 0,45%`}</Text>
+            <Text
+              style={styles.result}
+            >{`250 mL SF 0,9% + 250 mL AD EV ${result[
+              "salineSolutionFlow"
+            ].toLocaleString("pt-BR")} mL/h`}</Text>
+          </View>
+
+          <View style={styles.card}>
+            <Text style={styles.textResult}>{`Solução Salina 0,225%`}</Text>
+            <Text
+              style={styles.result}
+            >{`125 mL SF 0,9% + 375 mL AD EV ${result[
+              "salineSolution2Flow"
+            ].toLocaleString("pt-BR")} mL/h`}</Text>
+          </View>
+        </View>
+      )}
+
+      {result && (
+        <View style={styles.main}>
+          <Text style={styles.text}>Considerações</Text>
+          <Text style={styles.textResult}>
+            - Solicitar Na+ sérico a cada 2 horas
+          </Text>
+          <Text style={styles.textResult}>
+            - Preferir a via enteral, se disponível
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 }
@@ -191,6 +234,10 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     gap: 16,
     margin: 16,
+  },
+  card: {
+    alignItems: "center",
+    paddingTop: 16,
   },
   cell: {
     flex: 1,
@@ -214,7 +261,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
   },
   dropdownButton: {
-    width: 122,
+    width: "100%",
     height: 40,
     backgroundColor: "#E8E8E8",
     borderRadius: 8,
@@ -225,26 +272,16 @@ const styles = StyleSheet.create({
     borderColor: "#B4B4B4",
   },
   dropdown: {
-    width: 122,
+    width: "50%",
     backgroundColor: "#E8E8E8",
     borderRadius: 8,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "flex-start",
     padding: 8,
   },
-  internal: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    gap: 16,
-    padding: 24,
-  },
-  intro: {
-    padding: 8,
-    marginVertical: 8,
-    marginHorizontal: 16,
+  flatlist: {
+    width: "50%",
   },
   flatlistItem: {
     display: "flex",
@@ -252,15 +289,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     gap: 8,
-  },
-  item: {
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "#E8E8E8",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 14,
   },
   title: {
     padding: 20,
@@ -309,7 +337,6 @@ const styles = StyleSheet.create({
     color: "#E8E8E8",
   },
   textResult: {
-    padding: 20,
     fontFamily: "Inter_400Regular",
   },
 });

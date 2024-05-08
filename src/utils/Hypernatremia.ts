@@ -8,6 +8,9 @@ type THypernametremiaOutput = {
   water: number;
   salineSolution: number;
   salineSolution2: number;
+  glucoseSolution: number;
+  salineSolutionFlow: number;
+  salineSolution2Flow: number;
 };
 
 export default function getResults({
@@ -46,6 +49,9 @@ export default function getResults({
     water: calculateVolume(MAX_ELEVATION, variationWater),
     salineSolution: calculateVolume(MAX_ELEVATION, variationSS),
     salineSolution2: calculateVolume(MAX_ELEVATION, variationSS2),
+    glucoseSolution: getFlow(calculateVolume(MAX_ELEVATION, variationWater)),
+    salineSolutionFlow: getFlow(calculateVolume(MAX_ELEVATION, variationSS)),
+    salineSolution2Flow: getFlow(calculateVolume(MAX_ELEVATION, variationSS2)),
   };
 }
 
@@ -61,4 +67,8 @@ function calculateVariation(
 function calculateVolume(elevation: number, variation: number) {
   const volumeWater = (elevation * 1000) / Number(variation.toFixed(1));
   return Math.round(volumeWater) * -1;
+}
+
+function getFlow(volume: number): number {
+  return volume / 24;
 }

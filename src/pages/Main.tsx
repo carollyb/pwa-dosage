@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   main: {
-    backgroundColor: "#E8E8E8",
+    backgroundColor: "#506D71",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -58,8 +58,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   pressable: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 32,
+    fontFamily: "Inter_500Medium",
+    fontSize: 24,
+    color: "#E8E8E8",
   },
 });
 export default Main;
