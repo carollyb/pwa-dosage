@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
-  StatusBar,
   Text,
   View,
   TextInput,
@@ -10,10 +9,10 @@ import {
   FlatList,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
+import getResults from "../utils/Hypernatremia";
 
 function CalculatorHypernatremia() {
-  const [weight, setWeight] = useState<string>();
-  const [result, setResult] = useState<boolean | null>(null);
+  const [water, setWater] = useState<number | null>(null);
   const [data, setData] = useState<{ [key: string]: string } | null>(null);
 
   const DATA = [
@@ -63,7 +62,19 @@ function CalculatorHypernatremia() {
       if (index === 6) {
         return (
           <View style={styles.cell3}>
-            <Pressable style={styles.button} onPress={() => console.log(data)}>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                if (data) {
+                  const { water } = getResults({
+                    weight: data.weight,
+                    sodium: data.sodium,
+                    sex: data.sex,
+                  });
+                  setWater(water);
+                }
+              }}
+            >
               <Text style={styles.pressable}>{item.title}</Text>
             </Pressable>
           </View>
@@ -82,16 +93,16 @@ function CalculatorHypernatremia() {
             <SelectDropdown
               defaultButtonText={item.title}
               data={["Mulher", "Homem"]}
-              onSelect={(selectedItem, index) => {
+              onSelect={(selectedItem) => {
                 setData({
                   ...data,
                   [item.info]: selectedItem,
                 });
               }}
-              buttonTextAfterSelection={(selectedItem, index) => {
+              buttonTextAfterSelection={(selectedItem) => {
                 return `${selectedItem}`;
               }}
-              rowTextForSelection={(item, index) => {
+              rowTextForSelection={(item) => {
                 return item;
               }}
               buttonStyle={styles.dropdownButton}
@@ -111,7 +122,6 @@ function CalculatorHypernatremia() {
                   [item.info]: e,
                 })
               }
-              value={weight}
               placeholder={item.title}
               keyboardType="numeric"
             />
@@ -137,7 +147,7 @@ function CalculatorHypernatremia() {
         />
       </View>
 
-      {result && (
+      {water && (
         <View style={styles.main}>
           <Text style={styles.textResult}>
             Considerando que é seguro variar a [Na+]sérico em até 8 mEq/L em 24
@@ -145,7 +155,7 @@ function CalculatorHypernatremia() {
             mais utilizada, é de:
           </Text>
           <View style={styles.internal}>
-            <Text>{`Água livre  ${data} mL`}</Text>
+            <Text style={styles.result}>{`Água livre: ${water} mL`}</Text>
           </View>
         </View>
       )}
