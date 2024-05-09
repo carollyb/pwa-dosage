@@ -161,14 +161,57 @@ function CalculatorHyponatremia() {
       </View>
 
       {result && (
-        <View style={styles.main}>
-          <Text style={styles.textResult}>Déficit de Na+:</Text>
-          <View style={styles.resultBox}>
-            <Text
-              style={styles.result}
-            >{`${result["sodiumDeficiency"]} mEq`}</Text>
+        <>
+          <View style={styles.main}>
+            <Text style={styles.textResult}>Déficit de Na+:</Text>
+            <View style={styles.resultBox}>
+              <Text
+                style={styles.result}
+              >{`${result["sodiumDeficiency"]} mEq`}</Text>
+            </View>
+            <Text style={styles.textResult}>
+              Para este paciente são necessários
+            </Text>
+            <Text style={styles.result}>
+              {result["salineVolume"].toLocaleString("pt-BR")} mL de NaCl 3%,
+            </Text>
+            <Text style={styles.textResult}>
+              o que poderia elevar a [Na+]sérico em até
+            </Text>
+            <Text style={styles.result}>
+              {`${result["expectedVariation"].toFixed(1)} mEq/L`}
+            </Text>
+            <Text style={styles.textResult}>
+              {" "}
+              se infundido em 24 horas. Considerando que a elevação máxima
+              segura na [Na+]sérico é de até 8 mEq/L em 24 horas, utilizaremos
+            </Text>
+            <Text style={styles.result}>{`${result[
+              "maxSalineVolumeIn24h"
+            ].toFixed(1)} mL de NaCl 3%,`}</Text>
+            <Text style={styles.textResult}>
+              {" "}
+              que é o volume previsto necessário para causar esta elevação em 24
+              horas
+            </Text>
           </View>
-        </View>
+          <View style={styles.main}>
+            <Text style={styles.text}>{`Infusão de ${result[
+              "maxSalineVolumeIn24h"
+            ].toFixed(1)} mL de NaCl 3% em 24 horas`}</Text>
+            <Text style={styles.textResult}>
+              {`55 mL NaCl 20% + 445 mL SF 0,9% EV ${result["flow"].toFixed(
+                1
+              )} mL/h`}
+            </Text>
+          </View>
+          <View style={styles.main}>
+            <Text style={styles.text}>Observações</Text>
+            <Text style={styles.textResult}>
+              Solicitar [Na+]sérico a cada 2 horas
+            </Text>
+          </View>
+        </>
       )}
     </ScrollView>
   );
