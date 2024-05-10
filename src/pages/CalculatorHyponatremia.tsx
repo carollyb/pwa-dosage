@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import getResults from "../utils/Hyponatremia";
+import SodiumRangeError from "../components/SodiumRangeError";
 
 function CalculatorHyponatremia() {
   const [result, setResult] = useState<{ [key: string]: number } | null>(null);
@@ -249,13 +250,7 @@ function CalculatorHyponatremia() {
         </View>
       )}
 
-      {sodiumRangeError && (
-        <View style={styles.main}>
-          <Text style={styles.text}>
-            Valores de referência para o sódio desejado: de 135 a 145 mEq/L
-          </Text>
-        </View>
-      )}
+      {sodiumRangeError && <SodiumRangeError />}
     </ScrollView>
   );
 }

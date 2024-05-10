@@ -10,10 +10,12 @@ import {
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import getResults from "../utils/Hypernatremia";
+import SodiumRangeError from "../components/SodiumRangeError";
 
 function CalculatorHypernatremia() {
   const [result, setResult] = useState<{ [key: string]: number } | null>(null);
   const [data, setData] = useState<{ [key: string]: string } | null>(null);
+  const [sodiumRangeError, setSodiumRangeError] = useState<boolean>(false);
 
   const DATA = [
     {
@@ -52,6 +54,33 @@ function CalculatorHypernatremia() {
       title: "Calcular",
     },
   ];
+
+  const handleSubmit = (data: any): void => {
+    const { weight, sodium, sex } = data;
+    const minRefSodium = 135;
+    const maxRefSodium = 145;
+
+    if (weight === undefined) {
+      return;
+    }
+    if (sodium === undefined) {
+      return;
+    }
+    if (sex === undefined) {
+      return;
+    }
+    if (sodium >= minRefSodium && sodium <= maxRefSodium) {
+      setSodiumRangeError(true);
+      return;
+    }
+    const results = getResults({
+      weight: data.weight,
+      sodium: data.sodium,
+      sex: data.sex,
+    });
+    setSodiumRangeError(false);
+    setResult(results);
+  };
   interface DataItem {
     id: string;
     info: string;
@@ -65,14 +94,7 @@ function CalculatorHypernatremia() {
             <Pressable
               style={styles.button}
               onPress={() => {
-                if (data) {
-                  const results = getResults({
-                    weight: data.weight,
-                    sodium: data.sodium,
-                    sex: data.sex,
-                  });
-                  setResult(results);
-                }
+                handleSubmit(data);
               }}
             >
               <Text style={styles.pressable}>{item.title}</Text>
@@ -149,72 +171,72 @@ function CalculatorHypernatremia() {
         />
       </View>
 
-      {result && (
-        <View style={styles.main}>
-          <Text style={styles.textResult}>
-            Considerando que é seguro variar a [Na+]sérico em até 8 mEq/L em 24
-            horas, o volume necessario para causar esta redução, por solução
-            mais utilizada, é de:
-          </Text>
-          <View style={styles.resultBox}>
-            <Text style={styles.result}>{`Água livre: ${result[
-              "water"
-            ].toLocaleString("pt-BR")} mL`}</Text>
-            <Text style={styles.result}>{`Soro Glicosado 5%: ${result[
-              "water"
-            ].toLocaleString("pt-BR")} mL`}</Text>
-            <Text style={styles.result}>{`Solução Salina 0,45%: ${result[
-              "salineSolution"
-            ].toLocaleString("pt-BR")} mL`}</Text>
-            <Text style={styles.result}>{`Solução Salina 0,225%: ${result[
-              "salineSolution2"
-            ].toLocaleString("pt-BR")} mL`}</Text>
+      {result && !sodiumRangeError && (
+        <>
+          <View style={styles.main}>
+            <Text style={styles.textResult}>
+              Considerando que é seguro variar a [Na+]sérico em até 8 mEq/L em
+              24 horas, o volume necessario para causar esta redução, por
+              solução mais utilizada, é de:
+            </Text>
+            <View style={styles.resultBox}>
+              <Text style={styles.result}>{`Água livre: ${result[
+                "water"
+              ].toLocaleString("pt-BR")} mL`}</Text>
+              <Text style={styles.result}>{`Soro Glicosado 5%: ${result[
+                "water"
+              ].toLocaleString("pt-BR")} mL`}</Text>
+              <Text style={styles.result}>{`Solução Salina 0,45%: ${result[
+                "salineSolution"
+              ].toLocaleString("pt-BR")} mL`}</Text>
+              <Text style={styles.result}>{`Solução Salina 0,225%: ${result[
+                "salineSolution2"
+              ].toLocaleString("pt-BR")} mL`}</Text>
+            </View>
           </View>
-        </View>
+
+          <View style={styles.main}>
+            <Text style={styles.text}>Infusão em 24 horas</Text>
+
+            <View style={styles.card}>
+              <Text style={styles.textResult}>{`Soro Glicosado 5%`}</Text>
+              <Text style={styles.result}>{`Soro Glicosado 5% EV ${result[
+                "glucoseSolution"
+              ].toLocaleString("pt-BR")} mL/h`}</Text>
+            </View>
+
+            <View style={styles.card}>
+              <Text style={styles.textResult}>{`Solução Salina 0,45%`}</Text>
+              <Text
+                style={styles.result}
+              >{`250 mL SF 0,9% + 250 mL AD EV ${result[
+                "salineSolutionFlow"
+              ].toLocaleString("pt-BR")} mL/h`}</Text>
+            </View>
+
+            <View style={styles.card}>
+              <Text style={styles.textResult}>{`Solução Salina 0,225%`}</Text>
+              <Text
+                style={styles.result}
+              >{`125 mL SF 0,9% + 375 mL AD EV ${result[
+                "salineSolution2Flow"
+              ].toLocaleString("pt-BR")} mL/h`}</Text>
+            </View>
+          </View>
+
+          <View style={styles.main}>
+            <Text style={styles.text}>Considerações</Text>
+            <Text style={styles.textResult}>
+              - Solicitar Na+ sérico a cada 2 horas
+            </Text>
+            <Text style={styles.textResult}>
+              - Preferir a via enteral, se disponível
+            </Text>
+          </View>
+        </>
       )}
 
-      {result && (
-        <View style={styles.main}>
-          <Text style={styles.text}>Infusão em 24 horas</Text>
-
-          <View style={styles.card}>
-            <Text style={styles.textResult}>{`Soro Glicosado 5%`}</Text>
-            <Text style={styles.result}>{`Soro Glicosado 5% EV ${result[
-              "glucoseSolution"
-            ].toLocaleString("pt-BR")} mL/h`}</Text>
-          </View>
-
-          <View style={styles.card}>
-            <Text style={styles.textResult}>{`Solução Salina 0,45%`}</Text>
-            <Text
-              style={styles.result}
-            >{`250 mL SF 0,9% + 250 mL AD EV ${result[
-              "salineSolutionFlow"
-            ].toLocaleString("pt-BR")} mL/h`}</Text>
-          </View>
-
-          <View style={styles.card}>
-            <Text style={styles.textResult}>{`Solução Salina 0,225%`}</Text>
-            <Text
-              style={styles.result}
-            >{`125 mL SF 0,9% + 375 mL AD EV ${result[
-              "salineSolution2Flow"
-            ].toLocaleString("pt-BR")} mL/h`}</Text>
-          </View>
-        </View>
-      )}
-
-      {result && (
-        <View style={styles.main}>
-          <Text style={styles.text}>Considerações</Text>
-          <Text style={styles.textResult}>
-            - Solicitar Na+ sérico a cada 2 horas
-          </Text>
-          <Text style={styles.textResult}>
-            - Preferir a via enteral, se disponível
-          </Text>
-        </View>
-      )}
+      {sodiumRangeError && <SodiumRangeError />}
     </ScrollView>
   );
 }
