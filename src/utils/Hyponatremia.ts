@@ -1,3 +1,5 @@
+import { MAX_ELEVATION } from "./consts";
+
 type THyponametremiaInput = {
   weight: string;
   currentSodium: string;
@@ -20,7 +22,6 @@ export default function getResults({
 }: THyponametremiaInput): THyponametremiaOutput {
   const CONCENTRATION = 0.513;
   const CONCENTRATION_SS = 513;
-  const MAX_ELEVATION = 8;
 
   let water = sex === "Homem" ? 0.6 : 0.5;
   const totalBodyWater = water * Number(weight);

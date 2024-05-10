@@ -1,3 +1,5 @@
+import { MAX_ELEVATION } from "./consts";
+
 type THypernametremiaInput = {
   weight: string;
   sodium: string;
@@ -21,7 +23,7 @@ export default function getResults({
   const CONCENTRATION_SG5 = 0;
   const CONCENTRATION_SG045 = 77;
   const CONCENTRATION_SG0225 = 38;
-  const MAX_ELEVATION = 8;
+
   let water = sex === "Homem" ? 0.6 : 0.5;
 
   const variationWater = calculateVariation(

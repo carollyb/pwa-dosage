@@ -11,6 +11,7 @@ import {
 import SelectDropdown from "react-native-select-dropdown";
 import getResults from "../utils/Hyponatremia";
 import SodiumRangeError from "../components/SodiumRangeError";
+import { MAX_REF_SODIUM, MIN_REF_SODIUM } from "../utils/consts";
 
 function CalculatorHyponatremia() {
   const [result, setResult] = useState<{ [key: string]: number } | null>(null);
@@ -74,8 +75,6 @@ function CalculatorHyponatremia() {
 
   const handleSubmit = (data: any): void => {
     const { weight, currentSodium, desiredSodium, sex } = data;
-    const minRefSodium = 135;
-    const maxRefSodium = 145;
 
     if (weight === undefined) {
       return;
@@ -93,7 +92,7 @@ function CalculatorHyponatremia() {
       setSodiumValueError(true);
       return;
     }
-    if (desiredSodium < minRefSodium || desiredSodium > maxRefSodium) {
+    if (desiredSodium < MIN_REF_SODIUM || desiredSodium > MAX_REF_SODIUM) {
       setSodiumRangeError(true);
       return;
     }
