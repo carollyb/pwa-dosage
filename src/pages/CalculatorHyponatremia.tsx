@@ -14,6 +14,8 @@ import getResults from "../utils/Hyponatremia";
 function CalculatorHyponatremia() {
   const [result, setResult] = useState<{ [key: string]: number } | null>(null);
   const [data, setData] = useState<{ [key: string]: string } | null>(null);
+  const [sodiumValueError, setSodiumValueError] = useState<boolean>(false);
+  const [sodiumRangeError, setSodiumRangeError] = useState<boolean>(false);
 
   const DATA = [
     {
@@ -62,30 +64,55 @@ function CalculatorHyponatremia() {
       title: "Calcular",
     },
   ];
+
   interface DataItem {
     id: string;
     info: string;
     title: string;
   }
+
+  const handleSubmit = (data: any): void => {
+    const { weight, currentSodium, desiredSodium, sex } = data;
+    const minRefSodium = 135;
+    const maxRefSodium = 145;
+
+    if (weight === undefined) {
+      return;
+    }
+    if (currentSodium === undefined) {
+      return;
+    }
+    if (desiredSodium === undefined) {
+      return;
+    }
+    if (sex === undefined) {
+      return;
+    }
+    if (currentSodium > desiredSodium) {
+      setSodiumValueError(true);
+      return;
+    }
+    if (desiredSodium < minRefSodium || desiredSodium > maxRefSodium) {
+      setSodiumRangeError(true);
+      return;
+    }
+    const results = getResults({
+      weight: data.weight,
+      currentSodium: data.currentSodium,
+      desiredSodium: data.desiredSodium,
+      sex: data.sex,
+    });
+    setSodiumValueError(false);
+    setSodiumRangeError(false);
+    setResult(results);
+  };
+
   const Item = ({ item, index }: { item: DataItem; index: number }) => {
     if (index % 2 === 0) {
       if (index === 8) {
         return (
           <View style={styles.cell3}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                if (data) {
-                  const results = getResults({
-                    weight: data.weight,
-                    currentSodium: data.currentSodium,
-                    desiredSodium: data.desiredSodium,
-                    sex: data.sex,
-                  });
-                  setResult(results);
-                }
-              }}
-            >
+            <Pressable style={styles.button} onPress={() => handleSubmit(data)}>
               <Text style={styles.pressable}>{item.title}</Text>
             </Pressable>
           </View>
@@ -160,7 +187,7 @@ function CalculatorHyponatremia() {
         />
       </View>
 
-      {result && (
+      {result && !sodiumRangeError && !sodiumValueError && (
         <>
           <View style={styles.main}>
             <Text style={styles.textResult}>Déficit de Na+:</Text>
@@ -212,6 +239,22 @@ function CalculatorHyponatremia() {
             </Text>
           </View>
         </>
+      )}
+
+      {sodiumValueError && (
+        <View style={styles.main}>
+          <Text style={styles.text}>
+            Sódio atual deve ser menor que o desejado. Revise os campos
+          </Text>
+        </View>
+      )}
+
+      {sodiumRangeError && (
+        <View style={styles.main}>
+          <Text style={styles.text}>
+            Valores de referência para o sódio desejado: de 135 a 145 mEq/L
+          </Text>
+        </View>
       )}
     </ScrollView>
   );

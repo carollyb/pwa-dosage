@@ -24,8 +24,11 @@ export default function getResults({
 
   let water = sex === "Homem" ? 0.6 : 0.5;
   const totalBodyWater = water * Number(weight);
-  const sodiumDeficiency =
-    totalBodyWater * (Number(desiredSodium) - Number(currentSodium));
+  const sodiumDeficiency = Number(
+    (totalBodyWater * (Number(desiredSodium) - Number(currentSodium))).toFixed(
+      1
+    )
+  );
 
   const salineVolume = Math.round(sodiumDeficiency / CONCENTRATION);
 
