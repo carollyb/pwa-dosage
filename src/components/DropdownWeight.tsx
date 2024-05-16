@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { StyleSheet } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 
 type DropdownProps = {
@@ -21,8 +22,21 @@ function DropdownWeight({ setValue }: DropdownProps) {
       rowTextForSelection={(item, index) => {
         return item;
       }}
+      dropdownStyle={styles.dropdown}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  dropdown: {
+    width: "50%",
+    backgroundColor: "#E8E8E8",
+    borderRadius: 8,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    padding: 8,
+  },
+});
 
 export default DropdownWeight;
